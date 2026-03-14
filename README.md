@@ -26,39 +26,21 @@ can be ported to inherit from it with minimal changes.
 Recommended ordering (outermost first):
 **Redaction -> Policy -> Budget**
 
-## Setup
-
-Clone this repo next to the [ag2](https://github.com/ag2ai/ag2) repo
-(`ag2.1-beta` branch) so that `autogen.beta` is importable:
-
-```
-parent/
-  ag2/                              # ag2.1-beta branch
-  ag2-governance-middleware-poc/     # this repo
-```
-
 ## Running the demo
 
 ```bash
-cd ag2-governance-middleware-poc
+cd ag2_governance_middleware
 python demo.py
 ```
 
 No API keys required. All tests use mock LLM and mock Context.
 
-Adversarial tests (15 tests covering TOCTOU, corrupted input, boundary
-conditions, predicate failures, full-stack integration):
-
-```bash
-python test_adversarial.py
-```
-
 ## PoC Limitations
 
 - **Redaction is shallow**: only top-level `ModelRequest.content` is scanned.
   Nested structures and non-text payloads are not processed.
-- **Token tracking is approximate**: `consumed_tokens` is not auto-incremented
-  after LLM calls. The AG2.1 beta `LLMClient` emits `ModelResponse` via
-  `ctx.send()` (fire-and-forget), so the response is not accessible in
-  the middleware. Callers can update `consumed_tokens` directly.
+- **Token tracking is approximate**: `sum(response.usage.values())` is used
+  as a proxy. Provider-specific usage key normalization is out of scope.
 - **No circuit breaker**: planned for a second iteration.
+- **No speaker selection integration**: health-aware agent selection is a
+  separate concern addressed in [PR #2459](https://github.com/ag2ai/ag2/pull/2459).

@@ -25,18 +25,16 @@ logging.basicConfig(
 )
 
 # -- Path setup ------------------------------------------------------------
-# Clone this repo next to the ag2 repo (ag2.1-beta branch) so that
-# autogen.beta is importable:
-#   parent/
-#     ag2/                              <-- ag2.1-beta branch
-#     ag2-governance-middleware-poc/     <-- this repo
+# ag2_governance_middleware/ lives inside D:\work\Projects\ag2\
+# autogen.beta lives in D:\work\Projects\ag2\autogen\beta\
+# We add the ag2 root so both are importable.
 
 import os
 
 _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-_AG2_DIR = os.path.join(os.path.dirname(_THIS_DIR), "ag2")
-if os.path.isdir(_AG2_DIR) and _AG2_DIR not in sys.path:
-    sys.path.insert(0, _AG2_DIR)
+_AG2_ROOT = os.path.dirname(_THIS_DIR)
+if _AG2_ROOT not in sys.path:
+    sys.path.insert(0, _AG2_ROOT)
 
 # -- Import autogen.beta event types --------------------------------------
 

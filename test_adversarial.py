@@ -14,11 +14,10 @@ from dataclasses import dataclass, field
 from typing import Any
 
 # -- Path setup ---------------------------------------------------------------
-# Clone this repo next to the ag2 repo (ag2.1-beta branch).
 _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-_AG2_DIR = os.path.join(os.path.dirname(_THIS_DIR), "ag2")
-if os.path.isdir(_AG2_DIR) and _AG2_DIR not in sys.path:
-    sys.path.insert(0, _AG2_DIR)
+_AG2_ROOT = os.path.dirname(_THIS_DIR)
+if _AG2_ROOT not in sys.path:
+    sys.path.insert(0, _AG2_ROOT)
 
 from autogen.beta.events import (
     BaseEvent,
